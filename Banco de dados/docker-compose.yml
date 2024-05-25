@@ -1,0 +1,18 @@
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: locadora_db
+    environment:
+      MYSQL_ROOT_PASSWORD: senha
+      MYSQL_DATABASE: locadora_db
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: senha
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+    driver: local
