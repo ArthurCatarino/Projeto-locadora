@@ -1,8 +1,8 @@
-const services = require("../services/dbservices");
+const services_Filmes = require("../services/dbservices_Filmes");
 
 async function buscarTodos(req, res) {
   try {
-    let filmes = await services.buscarTodos();
+    let filmes = await services_Filmes.buscarTodos();
     res.status(200).json(filmes);
   } catch (error) {
     console.error("Erro ao listar filmes :", error);
@@ -12,10 +12,9 @@ async function buscarTodos(req, res) {
 
 async function buscaUnica(req, res) {
   try {
-    let filme = await services.buscaUnica(req.params.id);
+    let filme = await services_Filmes.buscaUnica(req.params.id);
     if (filme.length === 0) {
-      res.status(404).json("Filme nao encontrado");
-      return;
+      return res.status(404).json("Filme nao encontrado");
     }
     res.status(200).json(filme);
   } catch (error) {
@@ -25,7 +24,7 @@ async function buscaUnica(req, res) {
 }
 
 async function atualizaFilme(req, res) {
-  let filme = await services.buscaUnica(req.params.id);
+  let filme = await services_Filmes.buscaUnica(req.params.id);
   if (filme.length === 0) {
     return res.status(404).json("Filme nao encontrado");
   }
@@ -42,7 +41,7 @@ async function atualizaFilme(req, res) {
   }
 
   try {
-    await services.atualizaFilme(Nome, Diretor, QuantidadeEmEstoque, Estudio, req.params.id);
+    await services_Filmes.atualizaFilme(Nome, Diretor, QuantidadeEmEstoque, Estudio, req.params.id);
     return res.json(`Filme ${filme[0].Nome} atualizado para ${Nome}`);
   } catch (error) {
     console.error("Erro ao atualizar filme", error);
@@ -63,7 +62,7 @@ async function adicionarFilme(req, res) {
   }
 
   try {
-    await services.adicionarFilme(Nome, Diretor, QuantidadeEmEstoque, Estudio);
+    await services_Filmes.adicionarFilme(Nome, Diretor, QuantidadeEmEstoque, Estudio);
     res.status(200).json(`Filme : ${Nome} adicionado com sucesso`);
   } catch (error) {
     console.error("Erro ao adicionar filme", error);
@@ -73,11 +72,11 @@ async function adicionarFilme(req, res) {
 
 async function apagarFilme(req, res) {
   try {
-    let filme = await services.buscaUnica(req.params.id);
+    let filme = await services_Filmes.buscaUnica(req.params.id);
     if (filme.length === 0) {
       return res.status(404).json("Filme nao encontrado");
     }
-    await services.apagarFilme(req.params.id);
+    await services_Filmes.apagarFilme(req.params.id);
     res.status(200).json(`Filme: ${filme[0].Nome} apagado com sucesso`);
   } catch (error) {
     console.error("Erro ao apagar filme :", error);
