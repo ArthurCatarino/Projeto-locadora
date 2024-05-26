@@ -13,5 +13,6 @@ router.delete("/filmes/:id", controller_Filmes.apagarFilme);
 //Rotas do CRUD dos usuarios
 router.get("/users", controller_Usuarios.buscarTodos);
 router.get("/users/:id", controller_Usuarios.buscaUnica);
+router.post("/user/registrar", controller_Usuarios.criarUsuario);
 
 module.exports = router;
