@@ -1,16 +1,25 @@
-function validações_Login(nome, sobrenome, email, senha) {
+function validações_Registrar(nome, sobrenome, email, senha) {
   if (!nome) {
-    return "Nome nao preenchida corretamente";
+    return "Nome nao preenchido corretamente";
   }
   if (!sobrenome) {
-    return "Sobrenome nao preenchida corretamente";
+    return "Sobrenome nao preenchido corretamente";
   }
   if (!email) {
-    return "Email nao preenchida corretamente";
+    return "Email nao preenchido corretamente";
   }
   if (!senha) {
     return "Senha nao preenchida corretamente";
   }
 }
 
-module.exports = { validações_Login };
+function validações_Login(email, senha) {
+  if (!email) {
+    return "Email nao preenchido corretamente";
+  }
+  if (!senha) {
+    return "Senha nao preenchida corretamente";
+  }
+}
+
+module.exports = { validações_Registrar, validações_Login };

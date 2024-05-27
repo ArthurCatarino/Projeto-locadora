@@ -14,5 +14,6 @@ router.delete("/filmes/:id", controller_Filmes.apagarFilme);
 router.get("/users", controller_Usuarios.buscarTodos);
 router.get("/users/:id", controller_Usuarios.buscaUnica);
 router.post("/user/registrar", controller_Usuarios.criarUsuario);
+router.post("/login", controller_Usuarios.login);
 
 module.exports = router;
