@@ -15,16 +15,15 @@ async function buscarTodos(req, res) {
 
 async function buscaUnica(req, res) {
   try {
-    let usuario = await services_Usuarios.buscaUnica(req.params.id);
+    let usuario = await services_Usuarios.buscaUnica(req.id);
 
     if (usuario.length === 0) {
       return res.status(404).json("Usuario nao encontrado");
     }
-
-    res.status(200).json(usuario);
+    return res.status(200).json(usuario);
   } catch (error) {
     console.error(error);
-    res.status(500).json("Erro ao buscar usuario");
+    return res.status(500).json("Erro ao buscar usuario");
   }
 }
 
