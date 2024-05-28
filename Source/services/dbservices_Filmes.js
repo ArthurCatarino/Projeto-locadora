@@ -2,7 +2,7 @@ const db = require("../db");
 
 async function buscarTodos() {
   return new Promise((aceito, rejeitado) => {
-    const query = "SELECT * FROM locadora_db.filmes";
+    const query = "SELECT * FROM locadora_db.filmes where QuantidadeEmEstoque>0";
     db.query(query, (error, results) => {
       if (error) {
         rejeitado(error);
@@ -15,7 +15,7 @@ async function buscarTodos() {
 
 async function buscaUnica(id) {
   return new Promise((aceito, rejeitado) => {
-    const query = "SELECT * FROM locadora_db.filmes WHERE ID=?";
+    const query = "SELECT * FROM locadora_db.filmes WHERE ID=? and QuantidadeEmEstoque>0;";
     db.query(query, id, (error, results) => {
       if (error) {
         rejeitado(error);
