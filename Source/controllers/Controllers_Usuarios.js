@@ -6,10 +6,10 @@ const jwt = require("jsonwebtoken");
 async function buscarTodos(req, res) {
   try {
     let usuarios = await services_Usuarios.buscarTodos();
-    res.status(200).json(usuarios);
+    return res.status(200).json(usuarios);
   } catch (error) {
     console.error("Erro ao consultar os dados", error);
-    res.status(500).json("Erro ao consultar os dados");
+    return res.status(500).json("Erro ao consultar os dados");
   }
 }
 
@@ -49,7 +49,7 @@ async function criarUsuario(req, res) {
     console.error("Erro ao adicionar dados", error);
     return res.status(500).json("Erro ao adicionar dados");
   }
-  res.status(200).json(`Usuario ${nome} adicionado com sucesso`);
+  return res.status(200).json(`Usuario ${nome} adicionado com sucesso`);
 }
 
 async function login(req, res) {
@@ -76,20 +76,20 @@ async function login(req, res) {
     let atribuirCargo = await services_Usuarios.atribuirCargo(confereLogin[0].ID);
 
     if (atribuirCargo[0].Cargos_ID == 1) {
-      const token = jwt.sign({ id: atribuirCargo[0].Usuarios_ID, cargo: atribuirCargo[0].Cargos_ID }, user_secret, {
+      const token = jwt.sign({ id: atribuirCargo[0].Usuarios_ID }, user_secret, {
         expiresIn: "1h",
       });
       return res.status(200).json({ msg: "Usuario autenticado com sucesso", token });
     }
     if (atribuirCargo[0].Cargos_ID == 2) {
-      const token = jwt.sign({ id: atribuirCargo[0].Usuarios_ID, cargo: atribuirCargo[0].Cargos_ID }, admin_secret, {
+      const token = jwt.sign({ id: atribuirCargo[0].Usuarios_ID }, admin_secret, {
         expiresIn: "1h",
       });
       return res.status(200).json({ msg: "Admin autenticado com sucesso", token });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json("Algo deu errado durante a autenticação");
+    return res.status(500).json("Algo deu errado durante a autenticação");
   }
 }
 

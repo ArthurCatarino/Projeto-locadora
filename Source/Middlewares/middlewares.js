@@ -19,10 +19,25 @@ function confereAutorização(req, res, next) {
       });
     } else {
       req.id = result.id;
-      console.log(req.id);
       return next();
     }
   });
 }
 
-module.exports = { confereAutorização };
+function autorizaAdmin(req, res, next) {
+  const header = req.headers["authorization"];
+  const token = header && header.split(" ")[1];
+  if (!token) {
+    return res.status(401).json("Autenticação necessaria");
+  }
+
+  jwt.verify(token, process.env.ADMIN_SECRET, (error, results) => {
+    if (error) {
+      return res.status(403).json("Disponivel apenas para admins");
+    }
+    req.id = results.id;
+    return next();
+  });
+}
+
+module.exports = { confereAutorização, autorizaAdmin };
