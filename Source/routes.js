@@ -12,12 +12,15 @@ router.post("/filmes", middleware.autorizaAdmin, controller_Filmes.adicionarFilm
 router.put("/filmes/:id", middleware.autorizaAdmin, controller_Filmes.atualizaFilme);
 router.delete("/filmes/:id", middleware.autorizaAdmin, controller_Filmes.apagarFilme);
 
-router.post("/emprestimo/:id", middleware.confereAutorização, controller_emprestimo.fazerEmprestimo);
-
 //Rotas relacionadas a usuarios
 router.get("/users", middleware.autorizaAdmin, controller_Usuarios.buscarTodos);
 router.get("/users/perfil", middleware.confereAutorização, controller_Usuarios.buscaUnica);
 router.post("/user/registrar", controller_Usuarios.criarUsuario);
 router.post("/login", controller_Usuarios.login);
+
+//Rotas relacionadas a emprestimos
+router.post("/emprestimo/:id", middleware.confereAutorização, controller_emprestimo.fazerEmprestimo);
+router.get("/emprestimo", middleware.confereAutorização, controller_emprestimo.verEmprestimos);
+router.delete("/devolucao/:usuario/:filme", middleware.autorizaAdmin, controller_emprestimo.devolucao);
 
 module.exports = router;

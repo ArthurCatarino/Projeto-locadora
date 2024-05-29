@@ -58,7 +58,7 @@ async function criarUsuario(nome, sobrenome, email, senha) {
 
 async function login(email) {
   return new Promise((aceito, rejeitado) => {
-    const query = "select ID,email,senha from locadora_db.usuarios where email=?";
+    const query = "select ID,Nome,email,senha from locadora_db.usuarios where email=?";
     db.query(query, email, (error, results) => {
       if (error) {
         rejeitado(error);

@@ -76,13 +76,13 @@ async function login(req, res) {
     let atribuirCargo = await services_Usuarios.atribuirCargo(confereLogin[0].ID);
 
     if (atribuirCargo[0].Cargos_ID == 1) {
-      const token = jwt.sign({ id: atribuirCargo[0].Usuarios_ID }, user_secret, {
+      const token = jwt.sign({ id: atribuirCargo[0].Usuarios_ID, nome: confereLogin[0].Nome }, user_secret, {
         expiresIn: "1h",
       });
       return res.status(200).json({ msg: "Usuario autenticado com sucesso", token });
     }
     if (atribuirCargo[0].Cargos_ID == 2) {
-      const token = jwt.sign({ id: atribuirCargo[0].Usuarios_ID }, admin_secret, {
+      const token = jwt.sign({ id: atribuirCargo[0].Usuarios_ID, nome: confereLogin[0].Nome }, admin_secret, {
         expiresIn: "1h",
       });
       return res.status(200).json({ msg: "Admin autenticado com sucesso", token });

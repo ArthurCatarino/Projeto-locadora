@@ -7,18 +7,21 @@ function confereAutorização(req, res, next) {
     return res.status(401).json("Autenticação necessaria");
   }
 
-  jwt.verify(token, process.env.USER_SECRET, (erro, result) => {
+  jwt.verify(token, process.env.USER_SECRET, (erro, results) => {
     if (erro) {
       //Se o secret de usuario nao for valido ele tenta usar o secret de admin
       jwt.verify(token, process.env.ADMIN_SECRET, (error, results) => {
         if (error) {
           return res.status(401).json("Autenticação invadila");
         }
+
         req.id = results.id;
+        req.nome = results.nome;
         return next();
       });
     } else {
-      req.id = result.id;
+      req.id = results.id;
+      req.nome = results.nome;
       return next();
     }
   });
