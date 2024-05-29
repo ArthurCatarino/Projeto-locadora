@@ -121,6 +121,19 @@ async function deletaAdmin(id) {
   });
 }
 
+async function listaAdmin() {
+  return new Promise((aceito, rejeitado) => {
+    const query = "SELECT Usuarios_ID FROM locadora_db.cargosdeusuarios WHERE Cargos_ID = 2";
+    db.query(query, (error, results) => {
+      if (error) {
+        rejeitado(error);
+        return;
+      }
+      aceito(results);
+    });
+  });
+}
+
 module.exports = {
   buscarTodos,
   buscaUnica,
@@ -131,4 +144,5 @@ module.exports = {
   adicionaAdmin,
   buscaNome,
   deletaAdmin,
+  listaAdmin,
 };

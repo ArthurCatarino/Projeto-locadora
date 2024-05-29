@@ -120,17 +120,40 @@ async function deletaAdmin(req, res) {
     return res.status(400).json("Voce nao pode tirar o seu proprio cargo");
   }
 
-  const valida = await services_Usuarios.atribuirCargo(id); //Retorna qual o cargo do usuario, se o usuario nao tiver cargo e porque nao existe
+  try {
+    const valida = await services_Usuarios.atribuirCargo(id); //Retorna qual o cargo do usuario, se o usuario nao tiver cargo e porque nao existe
 
-  if (valida.length === 0) {
-    return res.status(400).json("Usuario nao existe");
+    if (valida.length === 0) {
+      return res.status(400).json("Usuario nao existe");
+    }
+    if (valida[0].Cargos_ID === 1) {
+      return res.status(400).json("O usuario nao e um admin");
+    }
+    const nome = await services_Usuarios.buscaNome(id);
+    await services_Usuarios.deletaAdmin(id);
+    return res.status(200).json(`Removida as permissoes de admin do usuario ${nome[0].Nome} `);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Erro ao deletar admin");
   }
-  if (valida[0].Cargos_ID === 1) {
-    return res.status(400).json("O usuario nao e um admin");
-  }
-  const nome = await services_Usuarios.buscaNome(id);
-  await services_Usuarios.deletaAdmin(id);
-  return res.status(200).json(`Removida as permissoes de admin do usuario ${nome[0].Nome} `);
 }
 
-module.exports = { buscarTodos, buscaUnica, criarUsuario, login, adicionaAdmin, deletaAdmin };
+async function listaAdmin(req, res) {
+  try {
+    const cargos = await services_Usuarios.listaAdmin();
+    let ids = [];
+    for (let i = 0; i < cargos.length; i++) {
+      ids.push(cargos[i].Usuarios_ID);
+    }
+    let admins = {};
+    for (let i = 0; i < ids.length; i++) {
+      admins[i] = await services_Usuarios.buscaUnica(ids[i]);
+    }
+    res.status(200).json(admins);
+  } catch (error) {
+    console.error(error);
+    json.status(500).json("Erro ao consultar lista de admins");
+  }
+}
+
+module.exports = { buscarTodos, buscaUnica, criarUsuario, login, adicionaAdmin, deletaAdmin, listaAdmin };

@@ -17,8 +17,11 @@ router.get("/users", middleware.autorizaAdmin, controller_Usuarios.buscarTodos);
 router.get("/users/perfil", middleware.confereAutorização, controller_Usuarios.buscaUnica);
 router.post("/user/registrar", controller_Usuarios.criarUsuario);
 router.post("/login", controller_Usuarios.login);
+
+//Rotas relacionadas a adicionar ou remover admins
 router.put("/adicionaAdmin/:id", middleware.autorizaAdmin, controller_Usuarios.adicionaAdmin);
 router.put("/deletaAdmin/:id", middleware.autorizaAdmin, controller_Usuarios.deletaAdmin);
+router.get("/admins", middleware.autorizaAdmin, controller_Usuarios.listaAdmin);
 
 //Rotas relacionadas a emprestimos
 router.post("/emprestimo/:id", middleware.confereAutorização, controller_emprestimo.fazerEmprestimo);
