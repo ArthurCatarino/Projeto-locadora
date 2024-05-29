@@ -93,4 +93,44 @@ async function login(req, res) {
   }
 }
 
-module.exports = { buscarTodos, buscaUnica, criarUsuario, login };
+async function adicionaAdmin(req, res) {
+  const id = req.params.id;
+  try {
+    const valida = await services_Usuarios.atribuirCargo(id); //Retorna qual o cargo do usuario, se o usuario nao tiver cargo e porque nao
+
+    if (valida.length === 0) {
+      return res.status(400).json("Usuario nao existe");
+    }
+
+    if (valida[0].Cargos_ID === 2) {
+      return res.status(400).json("O usuario ja e um admin");
+    }
+    const nome = await services_Usuarios.buscaNome(id);
+    await services_Usuarios.adicionaAdmin(id);
+    return res.status(200).json(`Usuario ${nome[0].Nome} adicionado como admin`);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json("Erro ao adicionar usuario");
+  }
+}
+
+async function deletaAdmin(req, res) {
+  id = req.params.id;
+  if (id == req.id) {
+    return res.status(400).json("Voce nao pode tirar o seu proprio cargo");
+  }
+
+  const valida = await services_Usuarios.atribuirCargo(id); //Retorna qual o cargo do usuario, se o usuario nao tiver cargo e porque nao existe
+
+  if (valida.length === 0) {
+    return res.status(400).json("Usuario nao existe");
+  }
+  if (valida[0].Cargos_ID === 1) {
+    return res.status(400).json("O usuario nao e um admin");
+  }
+  const nome = await services_Usuarios.buscaNome(id);
+  await services_Usuarios.deletaAdmin(id);
+  return res.status(200).json(`Removida as permissoes de admin do usuario ${nome[0].Nome} `);
+}
+
+module.exports = { buscarTodos, buscaUnica, criarUsuario, login, adicionaAdmin, deletaAdmin };

@@ -82,4 +82,53 @@ async function atribuirCargo(id) {
   });
 }
 
-module.exports = { buscarTodos, buscaUnica, buscaEmail, criarUsuario, login, atribuirCargo };
+async function adicionaAdmin(id) {
+  return new Promise((aceito, rejeitado) => {
+    const query = "UPDATE locadora_db.cargosdeusuarios SET Cargos_ID = 2 WHERE Usuarios_ID=? AND Cargos_ID=1;";
+    db.query(query, id, (error, results) => {
+      if (error) {
+        rejeitado(error);
+        return;
+      }
+      aceito(results);
+    });
+  });
+}
+
+async function buscaNome(id) {
+  return new Promise((aceito, rejeitado) => {
+    const query = "SELECT Nome FROM locadora_db.usuarios where ID=?";
+    db.query(query, id, (error, results) => {
+      if (error) {
+        rejeitado(error);
+        return;
+      }
+      aceito(results);
+    });
+  });
+}
+
+async function deletaAdmin(id) {
+  return new Promise((aceito, rejeitado) => {
+    const query = "UPDATE locadora_db.cargosdeusuarios SET Cargos_ID = 1 WHERE Usuarios_ID=? AND Cargos_ID=2";
+    db.query(query, id, (error, results) => {
+      if (error) {
+        rejeitado(error);
+        return;
+      }
+      aceito(results);
+    });
+  });
+}
+
+module.exports = {
+  buscarTodos,
+  buscaUnica,
+  buscaEmail,
+  criarUsuario,
+  login,
+  atribuirCargo,
+  adicionaAdmin,
+  buscaNome,
+  deletaAdmin,
+};

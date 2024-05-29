@@ -17,10 +17,12 @@ router.get("/users", middleware.autorizaAdmin, controller_Usuarios.buscarTodos);
 router.get("/users/perfil", middleware.confereAutorização, controller_Usuarios.buscaUnica);
 router.post("/user/registrar", controller_Usuarios.criarUsuario);
 router.post("/login", controller_Usuarios.login);
+router.put("/adicionaAdmin/:id", middleware.autorizaAdmin, controller_Usuarios.adicionaAdmin);
+router.put("/deletaAdmin/:id", middleware.autorizaAdmin, controller_Usuarios.deletaAdmin);
 
 //Rotas relacionadas a emprestimos
 router.post("/emprestimo/:id", middleware.confereAutorização, controller_emprestimo.fazerEmprestimo);
 router.get("/emprestimo", middleware.confereAutorização, controller_emprestimo.verEmprestimos);
-router.delete("/devolucao/:usuario/:filme", middleware.autorizaAdmin, controller_emprestimo.devolucao);
+router.delete("/devolucao/:filme/:usuario", middleware.autorizaAdmin, controller_emprestimo.devolucao);
 
 module.exports = router;

@@ -36,7 +36,6 @@ async function devolucao(req, res) {
   const usuario_ID = req.params.usuario;
   try {
     const valida = await services_Emprestimo.validacao(filme_ID, usuario_ID);
-    console.log(valida);
     if (valida.length === 0) {
       return res.status(400).json("Este usuario nao tem esse filme emprestado");
     }
