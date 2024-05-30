@@ -3,7 +3,7 @@ const router = express.Router();
 const controller_Filmes = require("./controllers/Controllers_Filmes");
 const controller_Usuarios = require("./controllers/Controllers_Usuarios");
 const controller_Emprestimo = require("./controllers/Controllers_Emprestimos");
-const controller_Email = require("./controllers/Controllers_EnviaEmail");
+const controller_recuperaSenha = require("./controllers/Controllers_RecuperaSenha");
 const middleware = require("./Middlewares/middlewares");
 
 //Rotas do CRUD dos filmes
@@ -30,6 +30,7 @@ router.get("/emprestimo", middleware.confereAutorização, controller_Emprestimo
 router.delete("/devolucao/:filme/:usuario", middleware.autorizaAdmin, controller_Emprestimo.devolucao);
 
 //Recuperar senha
-router.post("/recuperar-senha", controller_Email.recuperarSenha);
+router.post("/recuperar-senha", controller_recuperaSenha.recuperarSenha);
+router.post("/mudar-senha", controller_recuperaSenha.mudarSenha);
 
 module.exports = router;
