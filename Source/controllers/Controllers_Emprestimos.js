@@ -1,4 +1,6 @@
 const services_Emprestimo = require("../services/dbservices_Emprestimo");
+const services_Usuarios = require("../services/dbservices_Usuarios");
+const services_Filmes = require("../services/dbservices_Filmes");
 
 async function fazerEmprestimo(req, res) {
   const filme_ID = req.params.id;
@@ -47,4 +49,14 @@ async function devolucao(req, res) {
   }
 }
 
-module.exports = { fazerEmprestimo, verEmprestimos, devolucao };
+async function listaTodos(req, res) {
+  try {
+    const emprestimos = await services_Emprestimo.listaTodos();
+    res.status(200).json(emprestimos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Erro ao consultar banco de dados");
+  }
+}
+
+module.exports = { fazerEmprestimo, verEmprestimos, devolucao, listaTodos };

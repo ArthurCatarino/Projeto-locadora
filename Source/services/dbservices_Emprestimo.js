@@ -55,4 +55,17 @@ async function devolucao(filme, usuario) {
   });
 }
 
-module.exports = { fazerEmprestimo, validacao, verEmprestimos, devolucao };
+async function listaTodos() {
+  return new Promise((aceito, rejeitado) => {
+    const query = "select * from locadora_db.emprestimos ";
+    db.query(query, (error, results) => {
+      if (error) {
+        rejeitado(error);
+        return;
+      }
+      aceito(results);
+    });
+  });
+}
+
+module.exports = { fazerEmprestimo, validacao, verEmprestimos, devolucao, listaTodos };

@@ -28,6 +28,7 @@ router.get("/admins", middleware.autorizaAdmin, controller_Usuarios.listaAdmin);
 router.post("/emprestimo/:id", middleware.confereAutorização, controller_Emprestimo.fazerEmprestimo);
 router.get("/emprestimo", middleware.confereAutorização, controller_Emprestimo.verEmprestimos);
 router.delete("/devolucao/:filme/:usuario", middleware.autorizaAdmin, controller_Emprestimo.devolucao);
+router.get("/lista-de-emprestimos", middleware.autorizaAdmin, controller_Emprestimo.listaTodos);
 
 //Recuperar senha
 router.post("/recuperar-senha", controller_recuperaSenha.recuperarSenha);
