@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const controller_Filmes = require("./controllers/Controllers_Filmes");
 const controller_Usuarios = require("./controllers/Controllers_Usuarios");
-const controller_emprestimo = require("./controllers/Controllers_Emprestimos");
+const controller_Emprestimo = require("./controllers/Controllers_Emprestimos");
+const controller_Email = require("./controllers/Controllers_EnviaEmail");
 const middleware = require("./Middlewares/middlewares");
 
 //Rotas do CRUD dos filmes
@@ -24,8 +25,11 @@ router.put("/deletaAdmin/:id", middleware.autorizaAdmin, controller_Usuarios.del
 router.get("/admins", middleware.autorizaAdmin, controller_Usuarios.listaAdmin);
 
 //Rotas relacionadas a emprestimos
-router.post("/emprestimo/:id", middleware.confereAutorização, controller_emprestimo.fazerEmprestimo);
-router.get("/emprestimo", middleware.confereAutorização, controller_emprestimo.verEmprestimos);
-router.delete("/devolucao/:filme/:usuario", middleware.autorizaAdmin, controller_emprestimo.devolucao);
+router.post("/emprestimo/:id", middleware.confereAutorização, controller_Emprestimo.fazerEmprestimo);
+router.get("/emprestimo", middleware.confereAutorização, controller_Emprestimo.verEmprestimos);
+router.delete("/devolucao/:filme/:usuario", middleware.autorizaAdmin, controller_Emprestimo.devolucao);
+
+//Recuperar senha
+router.post("/recuperar-senha", controller_Email.recuperarSenha);
 
 module.exports = router;
