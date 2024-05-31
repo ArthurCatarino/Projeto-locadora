@@ -4,7 +4,7 @@ Este projeto tem como finalidade ser um sistema para emprestimos de filmes, onde
 
 # Dependencias
 
-Node.js /n
+Node.js
 Express
 Bcrypt
 Jsonwebtoken
