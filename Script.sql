@@ -106,11 +106,16 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `set_datas_emprestimos` BEFORE INSERT ON `emprestimos` FOR EACH ROW BEGIN
-    IF NEW.Data_do_emprestimo IS NULL THEN
-        SET NEW.Data_do_emprestimo = CURRENT_DATE;
-    END IF;
-    SET NEW.Data_da_devolucao = DATE_ADD(NEW.Data_do_emprestimo, INTERVAL 1 WEEK);
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `set_datas_emprestimos` BEFORE INSERT ON `emprestimos` FOR EACH ROW BEGIN
+
+    IF NEW.Data_do_emprestimo IS NULL THEN
+
+        SET NEW.Data_do_emprestimo = CURRENT_DATE;
+
+    END IF;
+
+    SET NEW.Data_da_devolucao = DATE_ADD(NEW.Data_do_emprestimo, INTERVAL 1 WEEK);
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -126,10 +131,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `decrementa_estoque_filme` BEFORE INSERT ON `emprestimos` FOR EACH ROW BEGIN
-    UPDATE locadora_db.filmes
-    SET QuantidadeEmEstoque = QuantidadeEmEstoque - 1
-    WHERE ID = NEW.ID_FILME;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `decrementa_estoque_filme` BEFORE INSERT ON `emprestimos` FOR EACH ROW BEGIN
+
+    UPDATE locadora_db.filmes
+
+    SET QuantidadeEmEstoque = QuantidadeEmEstoque - 1
+
+    WHERE ID = NEW.ID_FILME;
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -145,10 +154,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `incrementa_estoque_filme` BEFORE DELETE ON `emprestimos` FOR EACH ROW BEGIN
-    UPDATE locadora_db.filmes
-    SET QuantidadeEmEstoque = QuantidadeEmEstoque + 1
-    WHERE ID = OLD.ID_FILME;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `incrementa_estoque_filme` BEFORE DELETE ON `emprestimos` FOR EACH ROW BEGIN
+
+    UPDATE locadora_db.filmes
+
+    SET QuantidadeEmEstoque = QuantidadeEmEstoque + 1
+
+    WHERE ID = OLD.ID_FILME;
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
