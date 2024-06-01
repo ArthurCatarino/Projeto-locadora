@@ -43,13 +43,14 @@ async function verEmprestimos(usuario_ID) {
 
 async function devolucao(filme, usuario) {
   return new Promise((aceito, rejeitado) => {
-    const query = "DELETE FROM locadora_db.emprestimos WHERE ID_USER=? AND ID_FILME=?;";
-    const valores = [filme, usuario];
+    const query = "DELETE FROM locadora_db.emprestimos WHERE ID_USER=? AND ID_FILME=?";
+    const valores = [usuario, filme];
     db.query(query, valores, (error, results) => {
       if (error) {
         rejeitado(error);
         return;
       }
+      console.log(results);
       aceito(results);
     });
   });

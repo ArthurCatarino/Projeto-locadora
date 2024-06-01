@@ -9,11 +9,10 @@ const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
   auth: {
-    user: contatador,
-    pass: "k1Z4Ne3DdqSZzW3QXx",
+    user: "sadye.wehner83@ethereal.email",
+    pass: "QmYDpxZG98FcectzyQ",
   },
 });
-
 async function enviaEmail(email) {
   const token = await jwt.sign({ email: email }, process.env.RECUPERAR_SENHA, { expiresIn: "1h" });
   await transporter.sendMail({
